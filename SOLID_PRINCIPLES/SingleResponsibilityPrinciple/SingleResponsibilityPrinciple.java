@@ -37,6 +37,19 @@ class shoppingcart {
     }
 }
 
+class shoppingcartstorage {
+
+    private shoppingcart cart;
+    public shoppingcartstorage(shoppingcart cart) {
+        this.cart = cart;
+    }   
+
+
+    public void savetodatabase() {
+        System.out.println("Shopping cart saved to database.");
+    }
+}
+
 class shoppingcartprinter {
 
     private shoppingcart cart;
@@ -49,33 +62,6 @@ class shoppingcartprinter {
     }
 }   
 
-interface percistence {
-    void save(shoppingcart cart);
-}
-
-class mysqlpercistence implements percistence {
-    @Override
-    public void save(shoppingcart cart) {
-        // Code to save shopping cart to MySQL database
-        System.out.println("Shopping cart saved to MySQL database.");
-    }
-}
-
-class nosqlpercistence implements percistence {
-    @Override
-    public void save(shoppingcart cart) {
-        // Code to save shopping cart to NoSQL database
-        System.out.println("Shopping cart saved to NoSQL database.");
-    }
-}
-
-class filepercistence implements percistence {
-    @Override
-    public void save(shoppingcart cart) {
-        // Code to save shopping cart to a file
-        System.out.println("Shopping cart saved to a file.");
-    }
-}
 
 
 public class SingleResponsibilityPrinciple {
@@ -84,16 +70,7 @@ public class SingleResponsibilityPrinciple {
         cart.addproduct(new product("Laptop", 999.99));
         cart.addproduct(new product("Headphones", 199.99));
 
-        shoppingcartprinter printer = new shoppingcartprinter();
-        printer.printreceipt(cart);
-
-        percistence mysqlPersistence = new mysqlpercistence();
-        mysqlPersistence.save(cart);
-
-        percistence noSqlPersistence = new nosqlpercistence();
-        noSqlPersistence.save(cart);
-
-        percistence filePersistence = new filepercistence();
-        filePersistence.save(cart);
+        shoppingcartstorage storage = new shoppingcartstorage(cart);
+        storage.savetodatabase();
     }
 }
